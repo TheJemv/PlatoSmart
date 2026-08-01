@@ -2,7 +2,6 @@
   <img src="./assets/imagotipo.png" alt="PlatoSmart Logo" width="400" />
 </p>
 
-
 <p align="center">
   A modern recipe platform built with Next.js and Strapi.
 </p>
@@ -37,20 +36,31 @@ PlatoSmart is a full-stack recipe discovery platform. Users can browse recipes b
 
 ```
 PlatoSmart/
-├── assets/            # Brand assets (logos, category covers)
-├── frontend/           # Next.js application
-│   ├── app/            # App Router pages
-│   ├── api/             # Strapi API client layer
-│   ├── components/      # UI components
-│   ├── hooks/            # Custom React hooks
-│   ├── lib/               # Core utilities (Strapi client, etc.)
-│   ├── types/              # Shared TypeScript types
-│   └── Dockerfile
-├── strapi/              # Headless CMS
-│   ├── src/api/           # Content types, controllers, routes
-│   └── Dockerfile
-├── tester/               # Content generation & seeding scripts
-└── docker-compose.yml    # Orchestrates frontend, Strapi, DB, and tunnel
+├── app/                  # App Router pages
+│   ├── about/
+│   ├── authors/
+│   │   └── [slug]/
+│   ├── categories/
+│   │   └── [slug]/
+│   ├── contact/
+│   ├── privacy/
+│   ├── recipes/
+│   │   └── [slug]/
+│   ├── saved/
+│   ├── terms/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── robots.ts
+│   └── sitemap.ts
+├── api/                  # Strapi API client layer
+├── components/            # UI components (incl. shadcn/ui)
+├── hooks/                  # Custom React hooks
+├── lib/                     # Core utilities (Strapi client, etc.)
+├── types/                    # Shared TypeScript types
+├── utils/                     # Formatting & media helpers
+├── public/                     # Static assets
+├── Dockerfile
+└── next.config.mjs
 ```
 
 ## Features
@@ -68,39 +78,47 @@ PlatoSmart/
 
 - Node.js 22+
 - [pnpm](https://pnpm.io/)
-- Docker & Docker Compose (for full-stack local development or production)
+- Docker (optional, for production-style builds)
+- A running [Strapi](https://strapi.io/) instance (see `NEXT_PUBLIC_STRAPI_URL`)
 
-### Local Development (frontend only)
+### Local Development
 
 ```bash
-cd frontend
 pnpm install
 pnpm dev
 ```
 
 The app will be available at `http://localhost:3000`.
 
-### Full Stack with Docker Compose
-
-From the project root:
+### Production Build
 
 ```bash
-docker compose up -d --build
+pnpm build
+pnpm start
 ```
 
-This spins up:
-- `frontend` — the Next.js app
-- `strapi` — the CMS
-- `strapiDB` — PostgreSQL database
-- `cloudflared` — Cloudflare Tunnel for public access
+### Docker
 
-To rebuild only the frontend:
+Build and run the production image:
 
 ```bash
-docker compose up -d --build frontend
+docker build -t platosmart-next .
+docker run -d -p 3000:3000 --name platosmart-next platosmart-next
 ```
 
-## Available Scripts (frontend)
+A `Makefile` is included with shortcuts for common tasks:
+
+```bash
+make dev         # Start the dev server
+make build       # Build the Docker image
+make up          # Build + run the production container
+make down        # Stop and remove the container
+make logs        # Tail container logs
+make reinstall   # Clean install of dependencies
+make help        # List all available commands
+```
+
+## Available Scripts
 
 | Script | Description |
 |---|---|
@@ -111,11 +129,17 @@ docker compose up -d --build frontend
 
 ## Environment Variables
 
-Each service requires its own `.env` file (`frontend/.env`, `strapi/.env`). These are never committed to version control. See `.env.example` in each service for the required variables.
+Create a `.env` file in the project root (never committed to version control):
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://app.platosmart.com
+NEXT_PUBLIC_STRAPI_URL=https://strapi.platosmart.com
+PORT=3000
+```
 
 ## Deployment
 
-The frontend is deployed as a multi-stage Docker image (`deps` → `builder` → `runner`) running on Node 22 Alpine with pnpm via Corepack. Static assets are optimized at build time, while the homepage uses ISR (`revalidate`) to stay in sync with Strapi content without requiring a full redeploy.
+This app is built as a multi-stage Docker image (`deps` → `builder` → `runner`) running on Node 22 Alpine, with pnpm managed via Corepack for reproducible installs. The homepage uses ISR (`revalidate`) to stay in sync with Strapi content without requiring a full rebuild on every content change.
 
 ## License
 
