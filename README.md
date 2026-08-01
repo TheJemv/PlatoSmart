@@ -2,7 +2,6 @@
   <img src="./assets/imagotipo.png" alt="PlatoSmart Logo" width="400" />
 </p>
 
-<h1 align="center">PlatoSmart</h1>
 
 <p align="center">
   A modern recipe platform built with Next.js and Strapi.
