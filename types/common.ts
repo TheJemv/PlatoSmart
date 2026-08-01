@@ -11,6 +11,11 @@ export interface StrapiImageFormat {
     sizeInBytes?: number;
 }
 
+export interface StrapiBlock {
+    type: string;
+    children?: { text: string; type?: string }[];
+}
+
 export interface StrapiImage {
     id: number;
     documentId: string;

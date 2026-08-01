@@ -2,7 +2,7 @@
 import { MetadataRoute } from "next";
 import { getStrapiData } from "@/lib/strapi";
 import { StrapiResponse, Recipe, Category } from "@/types";
-import { AuthorData } from "@/api/authors";
+import { Author } from "@/types";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://platosmart.com";
@@ -64,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         const [recipesRes, categoriesRes, authorsRes] = await Promise.all([
             getStrapiData<StrapiResponse<Recipe[]>>("/api/recipes?fields[0]=slug&fields[1]=updatedAt"),
             getStrapiData<StrapiResponse<Category[]>>("/api/categories?fields[0]=slug&fields[1]=updatedAt"),
-            getStrapiData<StrapiResponse<AuthorData[]>>("/api/authors?fields[0]=slug&fields[1]=updatedAt"),
+            getStrapiData<StrapiResponse<Author[]>>("/api/authors?fields[0]=slug&fields[1]=updatedAt"),
         ]);
 
         // URLs Dinámicas de Recetas

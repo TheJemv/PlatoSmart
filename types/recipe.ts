@@ -51,4 +51,5 @@ export type RecipeSummary = Pick<
     | 'createdAt'
     | 'updatedAt'
     | 'publishedAt'
+    | 'coverImage'
 >;

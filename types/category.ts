@@ -1,3 +1,4 @@
+import { StrapiImage } from './common';
 import { RecipeSummary } from './recipe';
 
 export interface Category {
@@ -9,5 +10,7 @@ export interface Category {
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
+
+    coverImage?: StrapiImage;
     recipes?: RecipeSummary[];
 }

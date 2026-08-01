@@ -3,22 +3,6 @@ import qs from "qs";
 import { getStrapiData } from "@/lib/strapi";
 import { Author, StrapiResponse } from "@/types";
 
-export interface StrapiBlock {
-    type: string;
-    children?: { text: string; type?: string }[];
-}
-
-export interface AuthorData {
-    id: number;
-    documentId: string;
-    name: string;
-    slug: string;
-    email?: string;
-    bio?: StrapiBlock[] | string;
-    avatar?: any;
-    recipes?: any[];
-}
-
 export async function getAllAuthors() {
     const query = qs.stringify(
         {
@@ -28,7 +12,7 @@ export async function getAllAuthors() {
         { encodeValuesOnly: true }
     );
 
-    return await getStrapiData<StrapiResponse<AuthorData[]>>(`/api/authors?${query}`);
+    return await getStrapiData<StrapiResponse<Author[]>>(`/api/authors?${query}`);
 }
 
 
@@ -45,5 +29,5 @@ export async function getAuthorBySlug(slug: string) {
         { encodeValuesOnly: true }
     );
 
-    return await getStrapiData<StrapiResponse<AuthorData[]>>(`/api/authors?${query}`);
+    return await getStrapiData<StrapiResponse<Author[]>>(`/api/authors?${query}`);
 }

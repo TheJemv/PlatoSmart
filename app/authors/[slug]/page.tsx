@@ -8,9 +8,9 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Newsletter } from "@/components/newsletter";
 import { Button } from "@/components/ui/button";
-import { getAuthorBySlug, AuthorData, StrapiBlock } from "@/api/authors";
+import { getAuthorBySlug } from "@/api/authors";
 import { getRecipesByAuthor } from "@/api/recipes";
-import { Recipe } from "@/types";
+import { Author, Recipe } from "@/types";
 import { ChevronLeft, ChevronRight, BookOpen, Clock, Utensils, Mail } from "lucide-react";
 
 import { renderStrapiBlocks } from "@/components/renderStrapiBlocks"
@@ -23,7 +23,7 @@ export default function AuthorDetailPage({
     const resolvedParams = use(params);
     const slug = resolvedParams.slug;
 
-    const [author, setAuthor] = useState<AuthorData | null>(null);
+    const [author, setAuthor] = useState<Author | null>(null);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);

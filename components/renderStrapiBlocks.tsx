@@ -1,3 +1,5 @@
+import { StrapiBlock } from "@/types";
+
 function renderStrapiBlocks(bio: StrapiBlock[] | string | undefined) {
   if (!bio) return null;
   if (typeof bio === "string") return <p>{bio}</p>;

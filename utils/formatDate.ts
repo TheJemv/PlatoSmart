@@ -1,4 +1,4 @@
-export async function formatDate(date: Date) {
+export function formatDate(date: string | Date) {
     return new Intl.DateTimeFormat("es-ES", {
         day: "numeric",
         month: "long",

@@ -7,8 +7,9 @@ import Image from "next/image";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Newsletter } from "@/components/newsletter";
-import { getAllAuthors, AuthorData, StrapiBlock } from "@/api/authors";
+import { getAllAuthors } from "@/api/authors";
 import { BookOpen, Utensils, ArrowRight } from "lucide-react";
+import { Author, StrapiBlock } from "@/types";
 
 // Extraer un resumen de texto plano desde los bloques de la Bio
 function getBioSnippet(bio: StrapiBlock[] | string | undefined): string {
@@ -24,7 +25,7 @@ function getBioSnippet(bio: StrapiBlock[] | string | undefined): string {
 }
 
 export default function AuthorsPage() {
-    const [authors, setAuthors] = useState<AuthorData[]>([]);
+    const [authors, setAuthors] = useState<Author[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
