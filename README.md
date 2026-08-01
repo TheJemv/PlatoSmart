@@ -2,10 +2,6 @@
   <img src="./assets/imagotipo.png" alt="PlatoSmart Logo" width="400" />
 </p>
 
-<p align="center">
-  <img src="./assets/isotipo.jpeg" alt="PlatoSmart Icon" width="80" />
-</p>
-
 <h1 align="center">PlatoSmart</h1>
 
 <p align="center">
