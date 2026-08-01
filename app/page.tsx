@@ -20,6 +20,8 @@ import { formatDate } from "@/utils/formatDate";
 // app/layout.tsx (o app/page.tsx)
 import { getStrapiURL } from "@/utils/media";
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   const globalRes = await getGlobalSEO();
   const globalData = globalRes?.data;
