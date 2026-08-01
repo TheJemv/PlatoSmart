@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Poppins } from 'next/font/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 import './globals.css'
 
 const cormorant = Cormorant_Garamond({
@@ -19,24 +21,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'PlatoSmart - Delicious Recipes for Every Occasion',
   description: 'Discover amazing recipes, cooking tips, and culinary inspiration at PlatoSmart. Your ultimate destination for delicious homemade meals.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
+  generator: 'platosmart.com',
 }
 
 export default function RootLayout({
@@ -49,6 +34,10 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-background text-foreground">
         {children}
       </body>
+
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
     </html>
   )
 }
